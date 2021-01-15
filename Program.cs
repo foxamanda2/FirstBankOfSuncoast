@@ -128,94 +128,93 @@ namespace FirstBankOfSuncoast
                     {
                         // var savingsAccount = transactions.Where(saving => saving.Account.ToLower() == "saving");
 
-                        var savingsAmount = transactions.Select(savings => savings.Amount).Where(savings => savings.Account.ToLower() == "savings");
-
+                        var savingsAmount = transactions.Where(savings => savings.Account.ToLower() == withdrawAccount);
+                        var deposit = savingsAmount.Where(deposit => deposit.DepOrWith.ToLower() == "deposit");
+                        var total = deposit.Sum(saving => saving.Amount);
 
                         Console.Write("How much would you like to withdraw? ");
                         var amountWithdraw = int.Parse(Console.ReadLine());
 
-                        foreach (var save in savingsAccount)
+
+                        if (amountWithdraw < total)
                         {
-                            Console.WriteLine(save.Amount);
+                            var newtransaction = new Transactions();
+                            newtransaction.Account = withdrawAccount;
+                            newtransaction.Amount = (amountWithdraw);
+                            newtransaction.DepOrWith = "Withdraw";
+                            newtransaction.TransactionTime = DateTime.Now;
+
+                            transactions.Add(newtransaction);
                         }
-                        // Ask amount wanting to withdraw
-                        // Find sum of savings account
-                        //  If savings account sum is less than amount wanting to withdraw-->no funds
-                        // If savings is greater than amount wanting to withdraw--Add transaction
-                        // Create a new instance and add in all the details
 
-
-                        // var savingsAmount = transactions.Sum(total => total.Amount);
-
-                        // Console.WriteLine($"The amount is {savingsAccount}");
-
-
-                        // if (amountWithdraw < savingsAmount)
-                        // {
-                        //     Console.WriteLine("You have insufficient funds");
-                        // }
-
-                        // if (amountWithdraw > savingsAmount)
-                        // {
-                        //     Console.WriteLine(savingsAmount);
-                        // }
+                        if (amountWithdraw > total)
+                        {
+                            Console.WriteLine("Insufficient funds");
+                        }
                     }
 
                     if (withdrawAccount == "checking" || withdrawAccount == "c")
                     {
-                        var checkingAccount = transactions.Where(check => check.Account.ToLower() == "checking");
-
-                        var checkingAmount = checkingAccount.Select(amount => amount.Amount);
-
-                        var totalAmount = checkingAmount.Count();
+                        var checkingAmount = transactions.Where(check => check.Account.ToLower() == withdrawAccount);
+                        var total = checkingAmount.Sum(saving => saving.Amount);
 
                         Console.Write("How much would you like to withdraw? ");
                         var amountWithdraw = int.Parse(Console.ReadLine());
-                        if (amountWithdraw > totalAmount)
+
+
+                        if (amountWithdraw < total)
                         {
-                            Console.WriteLine("You have insufficient funds");
+                            var newtransaction = new Transactions();
+                            newtransaction.Account = withdrawAccount;
+                            newtransaction.Amount = (amountWithdraw);
+                            newtransaction.DepOrWith = "Withdraw";
+                            newtransaction.TransactionTime = DateTime.Now;
+
+                            transactions.Add(newtransaction);
                         }
-                        if (amountWithdraw < totalAmount)
+
+                        if (amountWithdraw > total)
                         {
-                            Console.WriteLine(totalAmount);
+                            Console.WriteLine("Insufficient funds");
                         }
                     }
-
-
-
-                    // --Ask how much they would like to withdraw(int.Parce)
-                    // --subtract that amount from savings
-                    // ---If that amount(savings<0)
-                    // ---Write "insufficient funds"
-                    // - If question answer is checking
-                    // --Find checking
-                    // --Ask how much they would like to withdraw(int.Parce)
-                    // --subtract that amount from checking
-                    // ---If that amount(checking<0)
-                    // ---Write "insufficient funds"
-                    // -- -return money back ?
-
                 }
 
 
 
+                // --Ask how much they would like to withdraw(int.Parce)
+                // --subtract that amount from savings
+                // ---If that amount(savings<0)
+                // ---Write "insufficient funds"
+                // - If question answer is checking
+                // --Find checking
+                // --Ask how much they would like to withdraw(int.Parce)
+                // --subtract that amount from checking
+                // ---If that amount(checking<0)
+                // ---Write "insufficient funds"
+                // -- -return money back ?
 
-
-                if (userInput == "quit")
-                {
-                    userQuit = true;
-                }
             }
 
 
 
 
 
-
-
-            Greeting("Thank you for your buisness");
-
+            if (userInput == "quit")
+            {
+                userQuit = true;
+            }
         }
+
+
+
+
+
+
+
+        Greeting("Thank you for your buisness");
+
     }
+}
 }
 
