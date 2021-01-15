@@ -39,18 +39,20 @@ namespace FirstBankOfSuncoast
             Console.WriteLine("");
         }
 
-        // static Transactions PromptAndFindBalance(List<Transactions> listOfAccountToSearch)
-        // {
-        //     Console.Write("Are you looking for savings or checking?");
-        //     var nameOfAccount = Console.ReadLine();
+        public static int AccountTotal(List<Transactions> transaction, string account)
+        {
+            var savings = transaction.Where(savings => savings.Account.ToLower().First() == account.First());
+            var deposit = savings.Where(saving => saving.DepOrWith.ToLower() == "deposit");
+            var withdraw = savings.Where(withdraw => withdraw.DepOrWith.ToLower() == "withdraw");
 
-        //     var account = listOfAccountToSearch.Where(pet => pet.Account.ToLower() == nameOfAccount);
+            var depositvalue = deposit.Sum(value => value.Amount);
+            var withdrawvalue = withdraw.Sum(value => value.Amount);
 
-        //     Console.Write("Are you looking for withdraw or deposit?");
-        //     var WithorDep = account.Where(WithorDep => WithorDep.DepOrWith.ToLower() == account);
+            var deposittotal = depositvalue - withdrawvalue;
 
-        //     return account;
-        // }
+            return deposittotal;
+
+        }
 
 
 
@@ -147,31 +149,42 @@ namespace FirstBankOfSuncoast
 
                     if (SorC == "savings" || SorC == "s")
                     {
-                        var savings = transactions.Where(savings => savings.Account.ToLower() == "savings");
-                        var deposit = savings.Where(saving => saving.DepOrWith.ToLower() == "deposit");
-                        var withdraw = savings.Where(withdraw => withdraw.DepOrWith.ToLower() == "withdraw");
+                        var totalbalance = AccountTotal(transactions, SorC);
 
-                        var depositvalue = deposit.Sum(value => value.Amount);
-                        var withdrawvalue = withdraw.Sum(value => value.Amount);
+                        Console.WriteLine(totalbalance);
 
-                        var deposittotal = depositvalue - withdrawvalue;
 
-                        Console.WriteLine(deposittotal);
+
+                        // var savings = transactions.Where(savings => savings.Account.ToLower() == "savings");
+                        // var deposit = savings.Where(saving => saving.DepOrWith.ToLower() == "deposit");
+                        // var withdraw = savings.Where(withdraw => withdraw.DepOrWith.ToLower() == "withdraw");
+
+                        // var depositvalue = deposit.Sum(value => value.Amount);
+                        // var withdrawvalue = withdraw.Sum(value => value.Amount);
+
+                        // var deposittotal = depositvalue - withdrawvalue;
+
+                        // Console.WriteLine(deposittotal);
 
                     }
 
                     if (SorC == "checking" || SorC == "c")
                     {
-                        var checking = transactions.Where(savings => savings.Account.ToLower() == "checking");
-                        var deposit = checking.Where(saving => saving.DepOrWith.ToLower() == "deposit");
-                        var withdraw = checking.Where(withdraw => withdraw.DepOrWith.ToLower() == "withdraw");
 
-                        var depositvalue = deposit.Sum(value => value.Amount);
-                        var withdrawvalue = withdraw.Sum(value => value.Amount);
+                        var totalbalance = AccountTotal(transactions, SorC);
 
-                        var deposittotal = depositvalue - withdrawvalue;
+                        Console.WriteLine(totalbalance);
 
-                        Console.WriteLine(deposittotal);
+                        // var checking = transactions.Where(savings => savings.Account.ToLower() == "checking");
+                        // var deposit = checking.Where(saving => saving.DepOrWith.ToLower() == "deposit");
+                        // var withdraw = checking.Where(withdraw => withdraw.DepOrWith.ToLower() == "withdraw");
+
+                        // var depositvalue = deposit.Sum(value => value.Amount);
+                        // var withdrawvalue = withdraw.Sum(value => value.Amount);
+
+                        // var deposittotal = depositvalue - withdrawvalue;
+
+                        // Console.WriteLine(deposittotal);
                     }
 
                 }
