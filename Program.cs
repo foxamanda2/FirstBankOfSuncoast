@@ -109,6 +109,7 @@ namespace FirstBankOfSuncoast
                 Console.WriteLine("");
                 Console.WriteLine("Menu Options:");
                 Console.WriteLine("View");
+                Console.WriteLine("Balance");
                 Console.WriteLine("Deposit");
                 Console.WriteLine("Withdraw");
                 Console.WriteLine("Quit");
@@ -139,9 +140,47 @@ namespace FirstBankOfSuncoast
 
                 }
 
+                if (userInput == "balance")
+                {
+                    Console.Write("Would you like to view your savings or checking?");
+                    var SorC = Console.ReadLine().ToLower();
+
+                    if (SorC == "savings" || SorC == "s")
+                    {
+                        var savings = transactions.Where(savings => savings.Account.ToLower() == "savings");
+                        var deposit = savings.Where(saving => saving.DepOrWith.ToLower() == "deposit");
+                        var withdraw = savings.Where(withdraw => withdraw.DepOrWith.ToLower() == "withdraw");
+
+                        var depositvalue = deposit.Sum(value => value.Amount);
+                        var withdrawvalue = withdraw.Sum(value => value.Amount);
+
+                        var deposittotal = depositvalue - withdrawvalue;
+
+                        Console.WriteLine(deposittotal);
+
+                    }
+
+                    if (SorC == "checking" || SorC == "c")
+                    {
+                        var checking = transactions.Where(savings => savings.Account.ToLower() == "checking");
+                        var deposit = checking.Where(saving => saving.DepOrWith.ToLower() == "deposit");
+                        var withdraw = checking.Where(withdraw => withdraw.DepOrWith.ToLower() == "withdraw");
+
+                        var depositvalue = deposit.Sum(value => value.Amount);
+                        var withdrawvalue = withdraw.Sum(value => value.Amount);
+
+                        var deposittotal = depositvalue - withdrawvalue;
+
+                        Console.WriteLine(deposittotal);
+                    }
+
+
+
+                }
+
                 if (userInput == "deposit")
                 {
-                    Console.Write("Would you like to deposit into your checkings or savings? ");
+                    Console.Write("Would you like to deposit into your checking or savings? ");
                     var depositAccount = Console.ReadLine();
 
                     Console.Write("How much would you like to deposit? ");
@@ -170,22 +209,25 @@ namespace FirstBankOfSuncoast
 
                 if (userInput == "withdraw")
                 {
-                    Console.Write("Would you like to withdraw from your checkings or savings?");
+                    Console.Write("Would you like to withdraw from your checking or savings?");
                     var withdrawAccount = Console.ReadLine().ToLower();
 
                     if (withdrawAccount == "savings" || withdrawAccount == "s")
                     {
-                        // var savingsAccount = transactions.Where(saving => saving.Account.ToLower() == "saving");
+                        var savings = transactions.Where(savings => savings.Account.ToLower() == "savings");
+                        var deposit = savings.Where(saving => saving.DepOrWith.ToLower() == "deposit");
+                        var withdraw = savings.Where(withdraw => withdraw.DepOrWith.ToLower() == "withdraw");
 
-                        var savingsAmount = transactions.Where(savings => savings.Account.ToLower() == withdrawAccount);
-                        var deposit = savingsAmount.Where(deposit => deposit.DepOrWith.ToLower() == "deposit");
-                        var total = deposit.Sum(saving => saving.Amount);
+                        var depositvalue = deposit.Sum(value => value.Amount);
+                        var withdrawvalue = withdraw.Sum(value => value.Amount);
+
+                        var deposittotal = depositvalue - withdrawvalue;
 
                         Console.Write("How much would you like to withdraw? ");
                         var amountWithdraw = int.Parse(Console.ReadLine());
 
 
-                        if (amountWithdraw < savingsbalance)
+                        if (amountWithdraw < deposittotal)
                         {
                             var newtransaction = new Transactions();
                             newtransaction.Account = withdrawAccount;
@@ -198,7 +240,7 @@ namespace FirstBankOfSuncoast
                             savingsbalance -= amountWithdraw;
                         }
 
-                        if (amountWithdraw > savingsbalance)
+                        if (amountWithdraw > deposittotal)
                         {
                             Console.WriteLine("Insufficient funds");
                         }
