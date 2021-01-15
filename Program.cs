@@ -11,9 +11,24 @@ namespace FirstBankOfSuncoast
         public int Amount { get; set; }
 
         public DateTime TransactionTime;
+
+        // public int SavingsValue()
+        // {
+        //     if (Account.ToLower() == "savings")
+
+        //         if (DepOrWith.ToLower() == "deposit")
+        //         {
+
+        //         }
+
+        //     return;
+        // }
     }
     class Program
     {
+
+
+
 
         static void Greeting(string prompt)
         {
@@ -23,10 +38,16 @@ namespace FirstBankOfSuncoast
             Console.WriteLine("");
             Console.WriteLine("");
         }
+
+
         static void Main(string[] args)
         {
 
+
             Greeting("Welcome to the First Bank of SunCoast");
+
+
+
 
             var transactions = new List<Transactions>()
             {
@@ -62,6 +83,11 @@ namespace FirstBankOfSuncoast
               }
 
             };
+            var savingsbalance = 0;
+
+            var checkingbalance = 0;
+
+
             var userQuit = false;
             while (userQuit == false)
             {
@@ -104,12 +130,20 @@ namespace FirstBankOfSuncoast
                     var depositAccount = Console.ReadLine();
 
                     Console.Write("How much would you like to deposit? ");
-                    var depositAmount = Console.ReadLine();
+                    var depositAmount = int.Parse(Console.ReadLine());
+                    if (depositAccount == "savings" || depositAccount == "s")
+                    {
+                        savingsbalance += depositAmount;
+                    }
+                    if (depositAccount == "checking" || depositAccount == "c")
+                    {
+                        checkingbalance += depositAmount;
+                    }
 
 
                     var newtransaction = new Transactions();
                     newtransaction.Account = depositAccount;
-                    newtransaction.Amount = int.Parse(depositAmount);
+                    newtransaction.Amount = depositAmount;
                     newtransaction.DepOrWith = "Deposit";
                     newtransaction.TransactionTime = DateTime.Now;
 
@@ -136,7 +170,7 @@ namespace FirstBankOfSuncoast
                         var amountWithdraw = int.Parse(Console.ReadLine());
 
 
-                        if (amountWithdraw < total)
+                        if (amountWithdraw < savingsbalance)
                         {
                             var newtransaction = new Transactions();
                             newtransaction.Account = withdrawAccount;
@@ -145,9 +179,11 @@ namespace FirstBankOfSuncoast
                             newtransaction.TransactionTime = DateTime.Now;
 
                             transactions.Add(newtransaction);
+
+                            savingsbalance -= amountWithdraw;
                         }
 
-                        if (amountWithdraw > total)
+                        if (amountWithdraw > savingsbalance)
                         {
                             Console.WriteLine("Insufficient funds");
                         }
@@ -162,7 +198,7 @@ namespace FirstBankOfSuncoast
                         var amountWithdraw = int.Parse(Console.ReadLine());
 
 
-                        if (amountWithdraw < total)
+                        if (amountWithdraw < checkingbalance)
                         {
                             var newtransaction = new Transactions();
                             newtransaction.Account = withdrawAccount;
@@ -171,9 +207,10 @@ namespace FirstBankOfSuncoast
                             newtransaction.TransactionTime = DateTime.Now;
 
                             transactions.Add(newtransaction);
+                            checkingbalance -= amountWithdraw;
                         }
 
-                        if (amountWithdraw > total)
+                        if (amountWithdraw > checkingbalance)
                         {
                             Console.WriteLine("Insufficient funds");
                         }
@@ -194,27 +231,22 @@ namespace FirstBankOfSuncoast
                 // ---Write "insufficient funds"
                 // -- -return money back ?
 
+                // }
+
+
+
+
+
+                if (userInput == "quit")
+                {
+                    userQuit = true;
+                }
             }
 
 
+            Greeting("Thank you for your buisness");
 
-
-
-            if (userInput == "quit")
-            {
-                userQuit = true;
-            }
         }
-
-
-
-
-
-
-
-        Greeting("Thank you for your buisness");
-
     }
-}
 }
 
