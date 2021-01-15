@@ -154,18 +154,6 @@ namespace FirstBankOfSuncoast
                         Console.WriteLine(totalbalance);
 
 
-
-                        // var savings = transactions.Where(savings => savings.Account.ToLower() == "savings");
-                        // var deposit = savings.Where(saving => saving.DepOrWith.ToLower() == "deposit");
-                        // var withdraw = savings.Where(withdraw => withdraw.DepOrWith.ToLower() == "withdraw");
-
-                        // var depositvalue = deposit.Sum(value => value.Amount);
-                        // var withdrawvalue = withdraw.Sum(value => value.Amount);
-
-                        // var deposittotal = depositvalue - withdrawvalue;
-
-                        // Console.WriteLine(deposittotal);
-
                     }
 
                     if (SorC == "checking" || SorC == "c")
@@ -175,16 +163,6 @@ namespace FirstBankOfSuncoast
 
                         Console.WriteLine(totalbalance);
 
-                        // var checking = transactions.Where(savings => savings.Account.ToLower() == "checking");
-                        // var deposit = checking.Where(saving => saving.DepOrWith.ToLower() == "deposit");
-                        // var withdraw = checking.Where(withdraw => withdraw.DepOrWith.ToLower() == "withdraw");
-
-                        // var depositvalue = deposit.Sum(value => value.Amount);
-                        // var withdrawvalue = withdraw.Sum(value => value.Amount);
-
-                        // var deposittotal = depositvalue - withdrawvalue;
-
-                        // Console.WriteLine(deposittotal);
                     }
 
                 }
@@ -225,20 +203,15 @@ namespace FirstBankOfSuncoast
 
                     if (withdrawAccount == "savings" || withdrawAccount == "s")
                     {
-                        var savings = transactions.Where(savings => savings.Account.ToLower() == "savings");
-                        var deposit = savings.Where(saving => saving.DepOrWith.ToLower() == "deposit");
-                        var withdraw = savings.Where(withdraw => withdraw.DepOrWith.ToLower() == "withdraw");
+                        var totalbalance = AccountTotal(transactions, withdrawAccount);
 
-                        var depositvalue = deposit.Sum(value => value.Amount);
-                        var withdrawvalue = withdraw.Sum(value => value.Amount);
-
-                        var deposittotal = depositvalue - withdrawvalue;
+                        Console.WriteLine(totalbalance);
 
                         Console.Write("How much would you like to withdraw? ");
                         var amountWithdraw = int.Parse(Console.ReadLine());
 
 
-                        if (amountWithdraw < deposittotal)
+                        if (amountWithdraw < totalbalance)
                         {
                             var newtransaction = new Transactions();
                             newtransaction.Account = withdrawAccount;
@@ -250,7 +223,7 @@ namespace FirstBankOfSuncoast
 
                         }
 
-                        if (amountWithdraw > deposittotal)
+                        if (amountWithdraw > totalbalance)
                         {
                             Console.WriteLine("Insufficient funds");
                         }
@@ -258,22 +231,13 @@ namespace FirstBankOfSuncoast
 
                     if (withdrawAccount == "checking" || withdrawAccount == "c")
                     {
-                        var checking = transactions.Where(savings => savings.Account.ToLower() == "checking");
-                        var deposit = checking.Where(saving => saving.DepOrWith.ToLower() == "deposit");
-                        var withdraw = checking.Where(withdraw => withdraw.DepOrWith.ToLower() == "withdraw");
-
-                        var depositvalue = deposit.Sum(value => value.Amount);
-                        var withdrawvalue = withdraw.Sum(value => value.Amount);
-
-                        var deposittotal = depositvalue - withdrawvalue;
-
-                        Console.WriteLine(deposittotal);
+                        var totalbalance = AccountTotal(transactions, withdrawAccount);
 
                         Console.Write("How much would you like to withdraw? ");
                         var amountWithdraw = int.Parse(Console.ReadLine());
 
 
-                        if (amountWithdraw < deposittotal)
+                        if (amountWithdraw < totalbalance)
                         {
                             var newtransaction = new Transactions();
                             newtransaction.Account = withdrawAccount;
@@ -283,9 +247,10 @@ namespace FirstBankOfSuncoast
 
                             transactions.Add(newtransaction);
                             checkingbalance -= amountWithdraw;
+
                         }
 
-                        if (amountWithdraw > deposittotal)
+                        if (amountWithdraw > totalbalance)
                         {
                             Console.WriteLine("Insufficient funds");
                         }
