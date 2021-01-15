@@ -39,6 +39,20 @@ namespace FirstBankOfSuncoast
             Console.WriteLine("");
         }
 
+        // static Transactions PromptAndFindBalance(List<Transactions> listOfAccountToSearch)
+        // {
+        //     Console.Write("Are you looking for savings or checking?");
+        //     var nameOfAccount = Console.ReadLine();
+
+        //     var account = listOfAccountToSearch.Where(pet => pet.Account.ToLower() == nameOfAccount);
+
+        //     Console.Write("Are you looking for withdraw or deposit?");
+        //     var WithorDep = account.Where(WithorDep => WithorDep.DepOrWith.ToLower() == account);
+
+        //     return account;
+        // }
+
+
 
         static void Main(string[] args)
         {
@@ -83,6 +97,7 @@ namespace FirstBankOfSuncoast
               }
 
             };
+
             var savingsbalance = 0;
 
             var checkingbalance = 0;
