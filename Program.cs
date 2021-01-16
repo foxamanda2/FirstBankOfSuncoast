@@ -11,18 +11,6 @@ namespace FirstBankOfSuncoast
         public int Amount { get; set; }
 
         public DateTime TransactionTime;
-
-        // public int SavingsValue()
-        // {
-        //     if (Account.ToLower() == "savings")
-
-        //         if (DepOrWith.ToLower() == "deposit")
-        //         {
-
-        //         }
-
-        //     return;
-        // }
     }
     class Program
     {
@@ -34,7 +22,7 @@ namespace FirstBankOfSuncoast
         {
             Console.WriteLine("");
             Console.WriteLine("");
-            Console.WriteLine("Welcome to the First Bank of SunCoast");
+            Console.WriteLine(prompt);
             Console.WriteLine("");
             Console.WriteLine("");
         }
@@ -100,9 +88,6 @@ namespace FirstBankOfSuncoast
 
             };
 
-            var savingsbalance = 0;
-
-            var checkingbalance = 0;
 
 
             var userQuit = false;
@@ -110,7 +95,7 @@ namespace FirstBankOfSuncoast
             {
                 Console.WriteLine("");
                 Console.WriteLine("Menu Options:");
-                Console.WriteLine("View");
+                Console.WriteLine("View: Transaction History");
                 Console.WriteLine("Balance");
                 Console.WriteLine("Deposit");
                 Console.WriteLine("Withdraw");
@@ -174,14 +159,14 @@ namespace FirstBankOfSuncoast
 
                     Console.Write("How much would you like to deposit? ");
                     var depositAmount = int.Parse(Console.ReadLine());
-                    if (depositAccount == "savings" || depositAccount == "s")
-                    {
-                        savingsbalance += depositAmount;
-                    }
-                    if (depositAccount == "checking" || depositAccount == "c")
-                    {
-                        checkingbalance += depositAmount;
-                    }
+                    // if (depositAccount == "savings" || depositAccount == "s")
+                    // {
+                    //     savingsbalance += depositAmount;
+                    // }
+                    // if (depositAccount == "checking" || depositAccount == "c")
+                    // {
+                    //     checkingbalance += depositAmount;
+                    // }
 
 
                     var newtransaction = new Transactions();
@@ -246,7 +231,6 @@ namespace FirstBankOfSuncoast
                             newtransaction.TransactionTime = DateTime.Now;
 
                             transactions.Add(newtransaction);
-                            checkingbalance -= amountWithdraw;
 
                         }
 
