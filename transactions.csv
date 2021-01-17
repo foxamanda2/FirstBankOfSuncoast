@@ -3,5 +3,7 @@ Savings,Deposit,45
 Checking,Deposit,150
 Checking,Withdraw,30
 Savings,Withdraw,5
-savings,Deposit,5
-savings,Withdraw,5
+checking,Transferred from,55
+savings,Transferred to,55
+checking,Transferred from,10
+savings,Transferred to,10

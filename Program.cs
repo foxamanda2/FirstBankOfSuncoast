@@ -72,40 +72,40 @@ namespace FirstBankOfSuncoast
             fileReader.Close();
 
 
-            var transactions = new List<Transactions>()
-            {
-              new Transactions
-              {
-                Account="Savings",
-                DepOrWith="Deposit",
-                Amount=45,
-                TransactionTime=DateTime.Now,
-              },
+            // var transactions = new List<Transactions>()
+            // {
+            //   new Transactions
+            //   {
+            //     Account="Savings",
+            //     DepOrWith="Deposit",
+            //     Amount=45,
+            //     TransactionTime=DateTime.Now,
+            //   },
 
-              new Transactions()
-              {
-                Account="Checking",
-                DepOrWith="Deposit",
-                Amount=150,
-                TransactionTime=DateTime.Now,
-              },
+            //   new Transactions()
+            //   {
+            //     Account="Checking",
+            //     DepOrWith="Deposit",
+            //     Amount=150,
+            //     TransactionTime=DateTime.Now,
+            //   },
 
-              new Transactions()
-              {
-                Account="Checking",
-                DepOrWith="Withdraw",
-                Amount=30,
-                TransactionTime=DateTime.Now,
-              },
-              new Transactions()
-              {
-                Account="Savings",
-                DepOrWith="Withdraw",
-                Amount=5,
-                TransactionTime=DateTime.Now,
-              }
+            //   new Transactions()
+            //   {
+            //     Account="Checking",
+            //     DepOrWith="Withdraw",
+            //     Amount=30,
+            //     TransactionTime=DateTime.Now,
+            //   },
+            //   new Transactions()
+            //   {
+            //     Account="Savings",
+            //     DepOrWith="Withdraw",
+            //     Amount=5,
+            //     TransactionTime=DateTime.Now,
+            //   }
 
-            };
+            // };
 
 
 
@@ -129,7 +129,7 @@ namespace FirstBankOfSuncoast
 
                     if (SorC == "savings" || SorC == "s")
                     {
-                        var savings = transactions.Where(savings => savings.Account.ToLower() == "savings");
+                        var savings = transaction.Where(savings => savings.Account.ToLower() == "savings");
                         foreach (var save in savings)
                         {
                             Console.WriteLine($"Your Transaction History: Your {save.Account} was {save.DepOrWith} on {save.TransactionTime}:\n ${save.Amount}");
@@ -137,7 +137,7 @@ namespace FirstBankOfSuncoast
                     }
                     if (SorC == "checking" || SorC == "c")
                     {
-                        var checking = transactions.Where(checking => checking.Account.ToLower() == "checking");
+                        var checking = transaction.Where(checking => checking.Account.ToLower() == "checking");
                         foreach (var check in checking)
                         {
                             Console.WriteLine($"Your Transaction History: Your {check.Account} was {check.DepOrWith} on {check.TransactionTime}:\n ${check.Amount}");
@@ -152,7 +152,7 @@ namespace FirstBankOfSuncoast
 
                     if (SorC == "savings" || SorC == "s")
                     {
-                        var totalbalance = AccountTotal(transactions, SorC);
+                        var totalbalance = AccountTotal(transaction, SorC);
 
                         Console.WriteLine(totalbalance);
 
@@ -162,7 +162,7 @@ namespace FirstBankOfSuncoast
                     if (SorC == "checking" || SorC == "c")
                     {
 
-                        var totalbalance = AccountTotal(transactions, SorC);
+                        var totalbalance = AccountTotal(transaction, SorC);
 
                         Console.WriteLine(totalbalance);
 
@@ -182,13 +182,13 @@ namespace FirstBankOfSuncoast
                     newtransaction.DepOrWith = "Deposit";
                     newtransaction.TransactionTime = DateTime.Now;
 
-                    transactions.Add(newtransaction);
+                    transaction.Add(newtransaction);
 
                     var fileWriter = new StreamWriter("transactions.csv");
 
                     var csvWriter = new CsvWriter(fileWriter, CultureInfo.InvariantCulture);
 
-                    csvWriter.WriteRecords(transactions);
+                    csvWriter.WriteRecords(transaction);
 
                     fileWriter.Close();
 
@@ -202,7 +202,7 @@ namespace FirstBankOfSuncoast
 
                     if (withdrawAccount == "savings" || withdrawAccount == "s")
                     {
-                        var totalbalance = AccountTotal(transactions, withdrawAccount);
+                        var totalbalance = AccountTotal(transaction, withdrawAccount);
 
                         Console.WriteLine($"Your current balance is: {totalbalance}");
 
@@ -216,13 +216,13 @@ namespace FirstBankOfSuncoast
                             newtransaction.DepOrWith = "Withdraw";
                             newtransaction.TransactionTime = DateTime.Now;
 
-                            transactions.Add(newtransaction);
+                            transaction.Add(newtransaction);
 
                             var fileWriter = new StreamWriter("transactions.csv");
 
                             var csvWriter = new CsvWriter(fileWriter, CultureInfo.InvariantCulture);
 
-                            csvWriter.WriteRecords(transactions);
+                            csvWriter.WriteRecords(transaction);
 
                             fileWriter.Close();
 
@@ -236,7 +236,7 @@ namespace FirstBankOfSuncoast
 
                     if (withdrawAccount == "checking" || withdrawAccount == "c")
                     {
-                        var totalbalance = AccountTotal(transactions, withdrawAccount);
+                        var totalbalance = AccountTotal(transaction, withdrawAccount);
 
                         Console.WriteLine($"Your current balance is: {totalbalance}");
 
@@ -250,13 +250,13 @@ namespace FirstBankOfSuncoast
                             newtransaction.DepOrWith = "Withdraw";
                             newtransaction.TransactionTime = DateTime.Now;
 
-                            transactions.Add(newtransaction);
+                            transaction.Add(newtransaction);
 
                             var fileWriter = new StreamWriter("transactions.csv");
 
                             var csvWriter = new CsvWriter(fileWriter, CultureInfo.InvariantCulture);
 
-                            csvWriter.WriteRecords(transactions);
+                            csvWriter.WriteRecords(transaction);
 
                             fileWriter.Close();
 
@@ -276,7 +276,7 @@ namespace FirstBankOfSuncoast
                     if (transferAccount == "savings")
                     {
 
-                        var totalbalance = AccountTotal(transactions, transferAccount);
+                        var totalbalance = AccountTotal(transaction, transferAccount);
 
                         var transferAmount = int.Parse(Prompt($"How much would you like to transfer from {transferAccount} to your checking? "));
 
@@ -288,7 +288,7 @@ namespace FirstBankOfSuncoast
                             newtransactionto.DepOrWith = "Transferred from";
                             newtransactionto.TransactionTime = DateTime.Now;
 
-                            transactions.Add(newtransactionto);
+                            transaction.Add(newtransactionto);
 
                             var newtransactionfrom = new Transactions();
                             newtransactionfrom.Account = "checking";
@@ -296,13 +296,13 @@ namespace FirstBankOfSuncoast
                             newtransactionfrom.DepOrWith = "Transferred to";
                             newtransactionfrom.TransactionTime = DateTime.Now;
 
-                            transactions.Add(newtransactionfrom);
+                            transaction.Add(newtransactionfrom);
 
                             var fileWriter = new StreamWriter("transactions.csv");
 
                             var csvWriter = new CsvWriter(fileWriter, CultureInfo.InvariantCulture);
 
-                            csvWriter.WriteRecords(transactions);
+                            csvWriter.WriteRecords(transaction);
 
                             fileWriter.Close();
 
@@ -318,7 +318,7 @@ namespace FirstBankOfSuncoast
                     if (transferAccount == "checking")
                     {
 
-                        var totalbalance = AccountTotal(transactions, transferAccount);
+                        var totalbalance = AccountTotal(transaction, transferAccount);
 
                         var transferAmount = int.Parse(Prompt($"How much would you like to transfer from {transferAccount} to your checking? "));
 
@@ -330,7 +330,7 @@ namespace FirstBankOfSuncoast
                             newtransactionto.DepOrWith = "Transferred from";
                             newtransactionto.TransactionTime = DateTime.Now;
 
-                            transactions.Add(newtransactionto);
+                            transaction.Add(newtransactionto);
 
                             var newtransactionfrom = new Transactions();
                             newtransactionfrom.Account = "savings";
@@ -338,13 +338,13 @@ namespace FirstBankOfSuncoast
                             newtransactionfrom.DepOrWith = "Transferred to";
                             newtransactionfrom.TransactionTime = DateTime.Now;
 
-                            transactions.Add(newtransactionfrom);
+                            transaction.Add(newtransactionfrom);
 
                             var fileWriter = new StreamWriter("transactions.csv");
 
                             var csvWriter = new CsvWriter(fileWriter, CultureInfo.InvariantCulture);
 
-                            csvWriter.WriteRecords(transactions);
+                            csvWriter.WriteRecords(transaction);
 
                             fileWriter.Close();
 
@@ -366,8 +366,6 @@ namespace FirstBankOfSuncoast
                     userQuit = true;
                 }
             }
-
-
 
             Greeting("Thank you for your business");
 
