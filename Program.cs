@@ -49,6 +49,13 @@ namespace FirstBankOfSuncoast
 
         }
 
+        public static string Prompt(string prompt)
+        {
+            Console.Write(prompt);
+            var input = Console.ReadLine().ToLower();
+            return input;
+        }
+
 
 
         static void Main(string[] args)
@@ -57,7 +64,12 @@ namespace FirstBankOfSuncoast
 
             Greeting("Welcome to the First Bank of SunCoast");
 
+            var fileReader = new StreamReader("transactions.csv");
 
+            var csvReader = new CsvReader(fileReader, CultureInfo.InvariantCulture);
+            var transaction = csvReader.GetRecords<Transactions>().ToList();
+
+            fileReader.Close();
 
 
             var transactions = new List<Transactions>()
@@ -113,8 +125,7 @@ namespace FirstBankOfSuncoast
 
                 if (userInput == "view")
                 {
-                    Console.Write("Would you like to view your Savings or Checking History?");
-                    var SorC = Console.ReadLine().ToLower();
+                    var SorC = Prompt("Would you like to view your Savings or Checking History?");
 
                     if (SorC == "savings" || SorC == "s")
                     {
@@ -137,8 +148,7 @@ namespace FirstBankOfSuncoast
 
                 if (userInput == "balance")
                 {
-                    Console.Write("Would you like to view your savings or checking?");
-                    var SorC = Console.ReadLine().ToLower();
+                    var SorC = Prompt("Would you like to view your savings or checking?");
 
                     if (SorC == "savings" || SorC == "s")
                     {
@@ -162,12 +172,9 @@ namespace FirstBankOfSuncoast
 
                 if (userInput == "deposit")
                 {
-                    Console.Write("Would you like to deposit into your checking or savings? ");
-                    var depositAccount = Console.ReadLine();
+                    var depositAccount = Prompt("Would you like to deposit into your checking or savings? ");
 
-                    Console.Write("How much would you like to deposit? ");
-                    var depositAmount = int.Parse(Console.ReadLine());
-
+                    var depositAmount = int.Parse(Prompt("How much would you like to deposit? "));
 
                     var newtransaction = new Transactions();
                     newtransaction.Account = depositAccount;
@@ -177,12 +184,13 @@ namespace FirstBankOfSuncoast
 
                     transactions.Add(newtransaction);
 
-                    var fileReader = new StreamReader("transactions.csv");
+                    var fileWriter = new StreamWriter("transactions.csv");
 
-                    var csvReader = new CsvReader(fileReader, CultureInfo.InvariantCulture);
-                    var transaction = csvReader.GetRecords<Transactions>().ToList();
+                    var csvWriter = new CsvWriter(fileWriter, CultureInfo.InvariantCulture);
 
-                    fileReader.Close();
+                    csvWriter.WriteRecords(transactions);
+
+                    fileWriter.Close();
 
                     Console.WriteLine($"Thank you! Your deposit of {depositAmount} has been applied to your {depositAccount} account.");
 
@@ -190,8 +198,7 @@ namespace FirstBankOfSuncoast
 
                 if (userInput == "withdraw")
                 {
-                    Console.Write("Would you like to withdraw from your checking or savings?");
-                    var withdrawAccount = Console.ReadLine().ToLower();
+                    var withdrawAccount = Prompt("Would you like to withdraw from your checking or savings?");
 
                     if (withdrawAccount == "savings" || withdrawAccount == "s")
                     {
@@ -199,9 +206,7 @@ namespace FirstBankOfSuncoast
 
                         Console.WriteLine($"Your current balance is: {totalbalance}");
 
-                        Console.Write("How much would you like to withdraw? ");
-                        var amountWithdraw = int.Parse(Console.ReadLine());
-
+                        var amountWithdraw = int.Parse(Prompt("How much would you like to withdraw? "));
 
                         if (amountWithdraw < totalbalance)
                         {
@@ -213,12 +218,13 @@ namespace FirstBankOfSuncoast
 
                             transactions.Add(newtransaction);
 
-                            var fileReader = new StreamReader("transactions.csv");
+                            var fileWriter = new StreamWriter("transactions.csv");
 
-                            var csvReader = new CsvReader(fileReader, CultureInfo.InvariantCulture);
-                            var transaction = csvReader.GetRecords<Transactions>().ToList();
+                            var csvWriter = new CsvWriter(fileWriter, CultureInfo.InvariantCulture);
 
-                            fileReader.Close();
+                            csvWriter.WriteRecords(transactions);
+
+                            fileWriter.Close();
 
                         }
 
@@ -234,9 +240,7 @@ namespace FirstBankOfSuncoast
 
                         Console.WriteLine($"Your current balance is: {totalbalance}");
 
-                        Console.Write("How much would you like to withdraw? ");
-                        var amountWithdraw = int.Parse(Console.ReadLine());
-
+                        var amountWithdraw = int.Parse(Prompt("How much would you like to withdraw? "));
 
                         if (amountWithdraw < totalbalance)
                         {
@@ -248,12 +252,13 @@ namespace FirstBankOfSuncoast
 
                             transactions.Add(newtransaction);
 
-                            var fileReader = new StreamReader("transactions.csv");
+                            var fileWriter = new StreamWriter("transactions.csv");
 
-                            var csvReader = new CsvReader(fileReader, CultureInfo.InvariantCulture);
-                            var transaction = csvReader.GetRecords<Transactions>().ToList();
+                            var csvWriter = new CsvWriter(fileWriter, CultureInfo.InvariantCulture);
 
-                            fileReader.Close();
+                            csvWriter.WriteRecords(transactions);
+
+                            fileWriter.Close();
 
                         }
 
@@ -266,16 +271,14 @@ namespace FirstBankOfSuncoast
 
                 if (userInput == "transfer")
                 {
-                    Console.Write("Would you like to transfer from your savings or checking? ");
-                    var transferAccount = Console.ReadLine().ToLower();
+                    var transferAccount = Prompt("Would you like to transfer from your savings or checking? ");
 
                     if (transferAccount == "savings")
                     {
 
                         var totalbalance = AccountTotal(transactions, transferAccount);
 
-                        Console.WriteLine($"How much would you like to transfer from {transferAccount} to your checking? ");
-                        var transferAmount = int.Parse(Console.ReadLine());
+                        var transferAmount = int.Parse(Prompt($"How much would you like to transfer from {transferAccount} to your checking? "));
 
                         if (transferAmount < totalbalance)
                         {
@@ -295,12 +298,13 @@ namespace FirstBankOfSuncoast
 
                             transactions.Add(newtransactionfrom);
 
-                            var fileReader = new StreamReader("transactions.csv");
+                            var fileWriter = new StreamWriter("transactions.csv");
 
-                            var csvReader = new CsvReader(fileReader, CultureInfo.InvariantCulture);
-                            var transaction = csvReader.GetRecords<Transactions>().ToList();
+                            var csvWriter = new CsvWriter(fileWriter, CultureInfo.InvariantCulture);
 
-                            fileReader.Close();
+                            csvWriter.WriteRecords(transactions);
+
+                            fileWriter.Close();
 
 
                         }
@@ -316,8 +320,7 @@ namespace FirstBankOfSuncoast
 
                         var totalbalance = AccountTotal(transactions, transferAccount);
 
-                        Console.WriteLine($"How much would you like to transfer from {transferAccount} to your checking? ");
-                        var transferAmount = int.Parse(Console.ReadLine());
+                        var transferAmount = int.Parse(Prompt($"How much would you like to transfer from {transferAccount} to your checking? "));
 
                         if (transferAmount < totalbalance)
                         {
@@ -337,12 +340,13 @@ namespace FirstBankOfSuncoast
 
                             transactions.Add(newtransactionfrom);
 
-                            var fileReader = new StreamReader("transactions.csv");
+                            var fileWriter = new StreamWriter("transactions.csv");
 
-                            var csvReader = new CsvReader(fileReader, CultureInfo.InvariantCulture);
-                            var transaction = csvReader.GetRecords<Transactions>().ToList();
+                            var csvWriter = new CsvWriter(fileWriter, CultureInfo.InvariantCulture);
 
-                            fileReader.Close();
+                            csvWriter.WriteRecords(transactions);
+
+                            fileWriter.Close();
 
 
                         }
@@ -363,13 +367,7 @@ namespace FirstBankOfSuncoast
                 }
             }
 
-            var fileWriter = new StreamWriter("transactions.csv");
 
-            var csvWriter = new CsvWriter(fileWriter, CultureInfo.InvariantCulture);
-
-            csvWriter.WriteRecords(transactions);
-
-            fileWriter.Close();
 
             Greeting("Thank you for your business");
 
