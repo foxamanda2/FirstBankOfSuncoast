@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using CsvHelper;
 
 namespace FirstBankOfSuncoast
 {
@@ -29,14 +32,18 @@ namespace FirstBankOfSuncoast
 
         public static int AccountTotal(List<Transactions> transaction, string account)
         {
-            var savings = transaction.Where(savings => savings.Account.ToLower().First() == account.First());
-            var deposit = savings.Where(saving => saving.DepOrWith.ToLower() == "deposit");
-            var withdraw = savings.Where(withdraw => withdraw.DepOrWith.ToLower() == "withdraw");
+            var acc = transaction.Where(acct => acct.Account.ToLower() == account);
+            var deposit = acc.Where(saving => saving.DepOrWith.ToLower() == "deposit");
+            var withdraw = acc.Where(withdraw => withdraw.DepOrWith.ToLower() == "withdraw");
+            var transferto = acc.Where(withdraw => withdraw.DepOrWith.ToLower() == "transferred to");
+            var transferfrom = acc.Where(withdraw => withdraw.DepOrWith.ToLower() == "transferred from");
 
             var depositvalue = deposit.Sum(value => value.Amount);
             var withdrawvalue = withdraw.Sum(value => value.Amount);
+            var transfertovalue = transferto.Sum(value => value.Amount);
+            var transferfromvalue = transferfrom.Sum(value => value.Amount);
 
-            var deposittotal = depositvalue - withdrawvalue;
+            var deposittotal = (depositvalue - withdrawvalue) + transfertovalue - transferfromvalue;
 
             return deposittotal;
 
@@ -99,6 +106,7 @@ namespace FirstBankOfSuncoast
                 Console.WriteLine("Balance");
                 Console.WriteLine("Deposit");
                 Console.WriteLine("Withdraw");
+                Console.WriteLine("Transfer");
                 Console.WriteLine("Quit");
 
                 var userInput = Console.ReadLine().ToLower().Trim();
@@ -113,7 +121,7 @@ namespace FirstBankOfSuncoast
                         var savings = transactions.Where(savings => savings.Account.ToLower() == "savings");
                         foreach (var save in savings)
                         {
-                            Console.WriteLine($"Your Transaction History: Your{save.Account} was {save.DepOrWith} on {save.TransactionTime}:\n ${save.Amount}");
+                            Console.WriteLine($"Your Transaction History: Your {save.Account} was {save.DepOrWith} on {save.TransactionTime}:\n ${save.Amount}");
                         }
                     }
                     if (SorC == "checking" || SorC == "c")
@@ -159,14 +167,6 @@ namespace FirstBankOfSuncoast
 
                     Console.Write("How much would you like to deposit? ");
                     var depositAmount = int.Parse(Console.ReadLine());
-                    // if (depositAccount == "savings" || depositAccount == "s")
-                    // {
-                    //     savingsbalance += depositAmount;
-                    // }
-                    // if (depositAccount == "checking" || depositAccount == "c")
-                    // {
-                    //     checkingbalance += depositAmount;
-                    // }
 
 
                     var newtransaction = new Transactions();
@@ -176,6 +176,13 @@ namespace FirstBankOfSuncoast
                     newtransaction.TransactionTime = DateTime.Now;
 
                     transactions.Add(newtransaction);
+
+                    var fileReader = new StreamReader("transactions.csv");
+
+                    var csvReader = new CsvReader(fileReader, CultureInfo.InvariantCulture);
+                    var transaction = csvReader.GetRecords<Transactions>().ToList();
+
+                    fileReader.Close();
 
                     Console.WriteLine($"Thank you! Your deposit of {depositAmount} has been applied to your {depositAccount} account.");
 
@@ -190,7 +197,7 @@ namespace FirstBankOfSuncoast
                     {
                         var totalbalance = AccountTotal(transactions, withdrawAccount);
 
-                        Console.WriteLine(totalbalance);
+                        Console.WriteLine($"Your current balance is: {totalbalance}");
 
                         Console.Write("How much would you like to withdraw? ");
                         var amountWithdraw = int.Parse(Console.ReadLine());
@@ -205,6 +212,13 @@ namespace FirstBankOfSuncoast
                             newtransaction.TransactionTime = DateTime.Now;
 
                             transactions.Add(newtransaction);
+
+                            var fileReader = new StreamReader("transactions.csv");
+
+                            var csvReader = new CsvReader(fileReader, CultureInfo.InvariantCulture);
+                            var transaction = csvReader.GetRecords<Transactions>().ToList();
+
+                            fileReader.Close();
 
                         }
 
@@ -218,6 +232,8 @@ namespace FirstBankOfSuncoast
                     {
                         var totalbalance = AccountTotal(transactions, withdrawAccount);
 
+                        Console.WriteLine($"Your current balance is: {totalbalance}");
+
                         Console.Write("How much would you like to withdraw? ");
                         var amountWithdraw = int.Parse(Console.ReadLine());
 
@@ -232,6 +248,13 @@ namespace FirstBankOfSuncoast
 
                             transactions.Add(newtransaction);
 
+                            var fileReader = new StreamReader("transactions.csv");
+
+                            var csvReader = new CsvReader(fileReader, CultureInfo.InvariantCulture);
+                            var transaction = csvReader.GetRecords<Transactions>().ToList();
+
+                            fileReader.Close();
+
                         }
 
                         if (amountWithdraw > totalbalance)
@@ -241,6 +264,98 @@ namespace FirstBankOfSuncoast
                     }
                 }
 
+                if (userInput == "transfer")
+                {
+                    Console.Write("Would you like to transfer from your savings or checking? ");
+                    var transferAccount = Console.ReadLine().ToLower();
+
+                    if (transferAccount == "savings")
+                    {
+
+                        var totalbalance = AccountTotal(transactions, transferAccount);
+
+                        Console.WriteLine($"How much would you like to transfer from {transferAccount} to your checking? ");
+                        var transferAmount = int.Parse(Console.ReadLine());
+
+                        if (transferAmount < totalbalance)
+                        {
+                            var newtransactionto = new Transactions();
+                            newtransactionto.Account = transferAccount;
+                            newtransactionto.Amount = (transferAmount);
+                            newtransactionto.DepOrWith = "Transferred from";
+                            newtransactionto.TransactionTime = DateTime.Now;
+
+                            transactions.Add(newtransactionto);
+
+                            var newtransactionfrom = new Transactions();
+                            newtransactionfrom.Account = "checking";
+                            newtransactionfrom.Amount = (transferAmount);
+                            newtransactionfrom.DepOrWith = "Transferred to";
+                            newtransactionfrom.TransactionTime = DateTime.Now;
+
+                            transactions.Add(newtransactionfrom);
+
+                            var fileReader = new StreamReader("transactions.csv");
+
+                            var csvReader = new CsvReader(fileReader, CultureInfo.InvariantCulture);
+                            var transaction = csvReader.GetRecords<Transactions>().ToList();
+
+                            fileReader.Close();
+
+
+                        }
+
+                        if (transferAmount > totalbalance)
+                        {
+                            Console.WriteLine("insufficient funds to transfer");
+                        }
+                    }
+
+                    if (transferAccount == "checking")
+                    {
+
+                        var totalbalance = AccountTotal(transactions, transferAccount);
+
+                        Console.WriteLine($"How much would you like to transfer from {transferAccount} to your checking? ");
+                        var transferAmount = int.Parse(Console.ReadLine());
+
+                        if (transferAmount < totalbalance)
+                        {
+                            var newtransactionto = new Transactions();
+                            newtransactionto.Account = transferAccount;
+                            newtransactionto.Amount = (transferAmount);
+                            newtransactionto.DepOrWith = "Transferred from";
+                            newtransactionto.TransactionTime = DateTime.Now;
+
+                            transactions.Add(newtransactionto);
+
+                            var newtransactionfrom = new Transactions();
+                            newtransactionfrom.Account = "savings";
+                            newtransactionfrom.Amount = (transferAmount);
+                            newtransactionfrom.DepOrWith = "Transferred to";
+                            newtransactionfrom.TransactionTime = DateTime.Now;
+
+                            transactions.Add(newtransactionfrom);
+
+                            var fileReader = new StreamReader("transactions.csv");
+
+                            var csvReader = new CsvReader(fileReader, CultureInfo.InvariantCulture);
+                            var transaction = csvReader.GetRecords<Transactions>().ToList();
+
+                            fileReader.Close();
+
+
+                        }
+
+                        if (transferAmount > totalbalance)
+                        {
+                            Console.WriteLine("insufficient funds to transfer");
+                        }
+
+                    }
+
+
+                }
 
                 if (userInput == "quit")
                 {
@@ -248,6 +363,13 @@ namespace FirstBankOfSuncoast
                 }
             }
 
+            var fileWriter = new StreamWriter("transactions.csv");
+
+            var csvWriter = new CsvWriter(fileWriter, CultureInfo.InvariantCulture);
+
+            csvWriter.WriteRecords(transactions);
+
+            fileWriter.Close();
 
             Greeting("Thank you for your business");
 

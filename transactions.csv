@@ -1,0 +1,6 @@
+Account,DepOrWith,Amount
+Savings,Deposit,45
+Checking,Deposit,150
+Checking,Withdraw,30
+Savings,Withdraw,5
+savings,Deposit,5
