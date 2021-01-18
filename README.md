@@ -76,19 +76,20 @@ Delete: Remove a balance from transaction(withdraw/deposit)
   while (userChoice==false)
 
   2. Menu Options ("Would you like to?");
-     - View
-     - Savings
-     - Checking
-     - Balance
-     - Savings
-     - Checking
-     - Deposit
-     - Savings
-     - Checking
-     - Withdraw
-     - Savings
-     - Checking
-     - Quit
+
+  - View
+    - Savings
+    - Checking
+  - Balance
+    - Savings
+    - Checking
+  - Deposit
+    - Savings
+    - Checking
+  - Withdraw
+    - Savings
+    - Checking
+  - Quit
 
   if (userChoice==View)
 
