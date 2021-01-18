@@ -17,10 +17,6 @@ namespace FirstBankOfSuncoast
     }
     class Program
     {
-
-
-
-
         static void Greeting(string prompt)
         {
             Console.WriteLine("");
@@ -46,7 +42,6 @@ namespace FirstBankOfSuncoast
             var deposittotal = (depositvalue - withdrawvalue) + transfertovalue - transferfromvalue;
 
             return deposittotal;
-
         }
 
         public static string Prompt(string prompt)
@@ -55,8 +50,6 @@ namespace FirstBankOfSuncoast
             var input = Console.ReadLine().ToLower();
             return input;
         }
-
-
 
         static void Main(string[] args)
         {
@@ -108,7 +101,6 @@ namespace FirstBankOfSuncoast
             // };
 
 
-
             var userQuit = false;
             while (userQuit == false)
             {
@@ -156,7 +148,6 @@ namespace FirstBankOfSuncoast
 
                         Console.WriteLine(totalbalance);
 
-
                     }
 
                     if (SorC == "checking" || SorC == "c")
@@ -165,9 +156,7 @@ namespace FirstBankOfSuncoast
                         var totalbalance = AccountTotal(transaction, SorC);
 
                         Console.WriteLine(totalbalance);
-
                     }
-
                 }
 
                 if (userInput == "deposit")
@@ -259,7 +248,6 @@ namespace FirstBankOfSuncoast
                             csvWriter.WriteRecords(transaction);
 
                             fileWriter.Close();
-
                         }
 
                         if (amountWithdraw > totalbalance)
@@ -305,8 +293,6 @@ namespace FirstBankOfSuncoast
                             csvWriter.WriteRecords(transaction);
 
                             fileWriter.Close();
-
-
                         }
 
                         if (transferAmount > totalbalance)
@@ -347,18 +333,13 @@ namespace FirstBankOfSuncoast
                             csvWriter.WriteRecords(transaction);
 
                             fileWriter.Close();
-
-
                         }
 
                         if (transferAmount > totalbalance)
                         {
                             Console.WriteLine("insufficient funds to transfer");
                         }
-
                     }
-
-
                 }
 
                 if (userInput == "quit")
@@ -368,7 +349,6 @@ namespace FirstBankOfSuncoast
             }
 
             Greeting("Thank you for your business");
-
         }
     }
 }
