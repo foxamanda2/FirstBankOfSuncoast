@@ -12,7 +12,6 @@ namespace FirstBankOfSuncoast
         public string Account { get; set; }
         public string DepOrWith { get; set; }
         public int Amount { get; set; }
-
         public DateTime TransactionTime;
     }
     class Program

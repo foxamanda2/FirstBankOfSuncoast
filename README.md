@@ -8,11 +8,11 @@
 - Cant Withdraw more than avaliable (Aka no account can be negative)
 - Make sure the amount to withdraw is positive and the transaction is positive
 - Menu options should be
-  -- Deposit to Savings
-  --Deposit to checkings
-  --withdraw from savings
-  --Withdraw from checkings
-  --Option to view checkings and savings
+  - Deposit to Savings
+  - Deposit to checkings
+  - withdraw from savings
+  - Withdraw from checkings
+  - Option to view checkings and savings
 - After each transaction write them to the file to save
 
 C R U D
@@ -34,37 +34,39 @@ Delete: Remove a balance from transaction(withdraw/deposit)
 ##Data
 
 - Class transaction
-  --Amount-int (The price you want)
-  --Savings/Checking-string Type ()
-  --Transfer--string
+
+  - Amount-int (The price you want)
+  - Savings/Checking-string Type ()
+  - Transfer--string
 
   - new list <transaction> csv
 
-  --Behaviors that a property can do limited to transaction.
-  --Behavior to describe the transaction
+  - Behaviors that a property can do limited to transaction.
+  - Behavior to describe the transaction
 
 > var customerChoice= false;
 > While (customerChoice==false);
 
 - Menu Options
-  -- Deposit to Savings
-  --Deposit to checkings
-  --withdraw from savings
-  --Withdraw from checkings
-  --View Checking and Savings history
-  --if (customerChoice=="quit"){
-  customerChoice=true;
-  }
-  --Quit Option
+
+  - Deposit to Savings
+  - Deposit to checkings
+  - withdraw from savings
+  - Withdraw from checkings
+  - View Checking and Savings history
+  - if (customerChoice=="quit"){
+    customerChoice=true;
+    }
+  - Quit Option
 
   ##Algorithm
 
   class Transaction
 
   - Class transaction
-    --Amount-int (The price you want)
-    --Savings/Checking-string Type ()
-    --Transfer--string
+    - Amount-int (The price you want)
+    - Savings/Checking-string Type ()
+    - Transfer--string
 
   1. Welcome to the bank
      var userChoice=false;
@@ -74,36 +76,38 @@ Delete: Remove a balance from transaction(withdraw/deposit)
   while (userChoice==false)
 
   2. Menu Options ("Would you like to?");
-     -View
-     --Savings
-     --Checking
-     -Balance
-     --Savings
-     --Checking
-     -Deposit
-     --Savings
-     --Checking
-     -Withdraw
-     --Savings
-     --Checking
-     -Quit
+     - View
+     - Savings
+     - Checking
+     - Balance
+     - Savings
+     - Checking
+     - Deposit
+     - Savings
+     - Checking
+     - Withdraw
+     - Savings
+     - Checking
+     - Quit
 
   if (userChoice==View)
-  -Write a question (savings or checking)
-  -If question answer is savings
-  --find savings
-  --print Transaction history
-  -If question answer is checking
-  --find checking
-  --print checking
-  --print Transaction history
+
+  - Write a question (savings or checking)
+  - If question answer is savings
+    - find savings
+    - print Transaction history
+  - If question answer is checking
+    - find checking
+    - print checking
+    - print Transaction history
 
   if (userChoice==Deposit) ADD
-  -Write a question (savings or checking)
-  --var newAccount=Answer (savings or checkings)
-  -How much do you want to add?
-  --var newAmount= answer (How much)
-  --var newTransfer=deposit (deposit or withdraw)
+
+  - Write a question (savings or checking)
+    - var newAccount=Answer (savings or checkings)
+  - How much do you want to add?
+    - var newAmount= answer (How much)
+    - var newTransfer=deposit (deposit or withdraw)
 
   var newtransaction= new Transaction()
 
@@ -116,23 +120,25 @@ Delete: Remove a balance from transaction(withdraw/deposit)
   Four lines of WriteLines
 
   if (userChoice==withdraw) REMOVE
-  -Write a question (savings or checking)
-  -If question answer is savings
-  --Find savings
-  --Ask how much they would like to withdraw (int.Parce)
-  --subtract that amount from savings
-  ---If that amount (savings<0)
-  ---Write "insufficient funds"
-  -If question answer is checking
-  --Find checking
-  --Ask how much they would like to withdraw (int.Parce)
-  --subtract that amount from checking
-  ---If that amount (checking<0)
-  ---Write "insufficient funds"
-  ---return money back?
+
+  - Write a question (savings or checking)
+  - If question answer is savings
+    - Find savings
+    - Ask how much they would like to withdraw (int.Parce)
+    - subtract that amount from savings
+      - If that amount (savings<0)
+      - Write "insufficient funds"
+  - If question answer is checking
+    - Find checking
+    - Ask how much they would like to withdraw (int.Parce)
+    - subtract that amount from checking
+      - If that amount (checking<0)
+      - Write "insufficient funds"
+      - return money back?
 
   if (userChoice==quit)
-  -var userChoise= true;
+
+  - var userChoise= true;
 
 * Write to a file
-  -Exit Bank account
+  - Exit Bank account
