@@ -7,9 +7,6 @@
 - Technologies Used
 
   - [C#](https://dotnet.microsoft.com/languages)
-
-- Skills used
-  - LINQ
-  - C#
-  - Data and control structures
-  - Working with files using CSV
+  - [LINQ](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/)
+  - [Control Structures](https://freeasphosting.net/csharp-tutorial-control-statements.html#:~:text=C%23%20offers%20three%20types%20of,%2C%20return%2C%20and%20goto%20statements.)
+  - [CsvHelper](https://joshclose.github.io/CsvHelper/)
