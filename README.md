@@ -6,7 +6,7 @@
 
 - Technologies Used
 
-  - ![C#](https://dotnet.microsoft.com/languages)
+  - [C#](https://dotnet.microsoft.com/languages)
 
 - Skills used
   - LINQ
